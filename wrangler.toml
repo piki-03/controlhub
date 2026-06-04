@@ -1,0 +1,6 @@
+name = "controlhub"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "RELAY_STATE"
+id = "a25e8ae778384c0f839231cabcd0d07f"
