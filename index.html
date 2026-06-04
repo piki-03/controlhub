@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ControlHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="scanline"></div>
+  <div class="grid-bg"></div>
+
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo-mark"></div>
+        <div>
+          <h1 class="title">CONTROL<span>HUB</span></h1>
+          <p class="subtitle">ESP32 RELAY CONTROLLER</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="status-indicator" id="connStatus">
+          <span class="dot"></span>
+          <span class="status-text">CONNECTING</span>
+        </div>
+        <button class="settings-btn" onclick="toggleSettings()">&#9881;</button>
+        <div class="settings-panel" id="settingsPanel">
+          <div class="settings-item" onclick="setTheme('dark')">&#9790; Mode Gelap</div>
+          <div class="settings-item" onclick="setTheme('light')">&#9728; Mode Terang</div>
+          <div class="settings-divider"></div>
+          <div class="settings-item" onclick="refreshAll()">&#8635; Refresh Status</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- STAT BAR -->
+      <div class="stat-bar">
+        <div class="stat">
+          <span class="stat-label">AKTIF</span>
+          <span class="stat-value" id="activeCount">0</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-label">TOTAL</span>
+          <span class="stat-value">8</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-label">POLLING</span>
+          <span class="stat-value">2s</span>
+        </div>
+      </div>
+
+      <!-- RELAY GRID -->
+      <div class="relay-grid" id="relayGrid">
+
+        <div class="relay-card" id="card-1" onclick="toggleRelay(1)">
+          <div class="card-header">
+            <span class="relay-num">R1</span>
+            <span class="relay-badge" id="badge-1">OFF</span>
+          </div>
+          <div class="card-icon">&#128161;</div>
+          <div class="card-label">Lampu</div>
+          <div class="card-footer">
+            <div class="toggle-track" id="toggle-1"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div class="relay-card" id="card-2" onclick="toggleRelay(2)">
+          <div class="card-header">
+            <span class="relay-num">R2</span>
+            <span class="relay-badge" id="badge-2">OFF</span>
+          </div>
+          <div class="card-icon">&#128716;</div>
+          <div class="card-label">Tidur</div>
+          <div class="card-footer">
+            <div class="toggle-track" id="toggle-2"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div class="relay-card" id="card-3" onclick="toggleRelay(3)">
+          <div class="card-header">
+            <span class="relay-num">R3</span>
+            <span class="relay-badge" id="badge-3">OFF</span>
+          </div>
+          <div class="card-icon">&#128293;</div>
+          <div class="card-label">Dapur</div>
+          <div class="card-footer">
+            <div class="toggle-track" id="toggle-3"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div class="relay-card" id="card-4" onclick="toggleRelay(4)">
+          <div class="card-header">
+            <span class="relay-num">R4</span>
+            <span class="relay-badge" id="badge-4">OFF</span>
+          </div>
+          <div class="card-icon">&#127968;</div>
+          <div class="card-label">Teras</div>
+          <div class="card-footer">
+            <div class="toggle-track" id="toggle-4"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div class="relay-card" id="card-5" onclick="toggleRelay(5)">
+          <div class="card-header">
+            <span class="relay-num">R5</span>
+            <span class="relay-badge" id="badge-5">OFF</span>
+          </div>
+          <div class="card-icon">&#10052;</div>
+          <div class="card-label">AC</div>
+          <div class="card-footer">
+            <div class="toggle-track" id="toggle-5"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div class="relay-card" id="card-6" onclick="toggleRelay(6)">
+          <div class="card-header">
+            <span class="relay-num">R6</span>
+            <span class="relay-badge" id="badge-6">OFF</span>
+          </div>
+          <div class="card-icon">&#128268;</div>
+          <div class="card-label">Kipas</div>
+          <div class="card-footer">
+            <div class="toggle-track" id="toggle-6"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div class="relay-card" id="card-7" onclick="toggleRelay(7)">
+          <div class="card-header">
+            <span class="relay-num">R7</span>
+            <span class="relay-badge" id="badge-7">OFF</span>
+          </div>
+          <div class="card-icon">&#128274;</div>
+          <div class="card-label">Kunci</div>
+          <div class="card-footer">
+            <div class="toggle-track" id="toggle-7"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div class="relay-card" id="card-8" onclick="toggleRelay(8)">
+          <div class="card-header">
+            <span class="relay-num">R8</span>
+            <span class="relay-badge" id="badge-8">OFF</span>
+          </div>
+          <div class="card-icon">&#128247;</div>
+          <div class="card-label">CCTV</div>
+          <div class="card-footer">
+            <div class="toggle-track" id="toggle-8"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ALL OFF / ALL ON -->
+      <div class="bulk-actions">
+        <button class="bulk-btn off" onclick="allOff()">&#9724; ALL OFF</button>
+        <button class="bulk-btn on" onclick="allOn()">&#9724; ALL ON</button>
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>ControlHub v1.0</span>
+      <span id="lastUpdate">--:--:--</span>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
